@@ -48,7 +48,7 @@ A modern, full-stack web application for real-time object detection using React,
    npm run dev
    ```
 
-   The frontend will be available at `http://localhost:5174`
+   The frontend will be available at `http://localhost:5173`
 
 ### Backend Setup
 

@@ -1,325 +1,323 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Camera, Target, Zap, Brain, Sparkles, ArrowRight, Play, Star, TrendingUp, Users, Award, CheckCircle } from 'lucide-react'
+import { Camera, Target, Zap, Brain, Sparkles, ArrowRight, Play, Users, Award, Eye, Scan, Upload } from 'lucide-react'
+import { useRef } from 'react'
 
 export default function HomePage() {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.5])
+
   const features = [
     {
-      icon: Target,
-      title: "95%+ Accuracy",
-      description: "State-of-the-art YOLO model with industry-leading precision",
-      color: "text-green-600",
-      bgColor: "bg-green-50"
-    },
-    {
-      icon: Zap,
-      title: "Real-time Processing",
-      description: "Lightning-fast detection in under 2 seconds per image",
-      color: "text-yellow-600",
-      bgColor: "bg-yellow-50"
+      icon: Eye,
+      title: "Real-time Detection",
+      description: "Instantly identify and locate objects in any image with sub-second processing",
+      color: "text-blue-600",
+      bgColor: "bg-blue-50"
     },
     {
       icon: Brain,
-      title: "Deep Learning AI",
-      description: "Advanced neural networks trained on millions of images",
+      title: "80+ Object Classes",
+      description: "From people and vehicles to animals and everyday items",
       color: "text-purple-600",
       bgColor: "bg-purple-50"
     },
     {
-      icon: Sparkles,
-      title: "80+ Object Classes",
-      description: "Detect people, vehicles, animals, and everyday objects",
-      color: "text-blue-600",
-      bgColor: "bg-blue-50"
+      icon: Zap,
+      title: "High Accuracy",
+      description: "95%+ precision powered by the latest YOLO v8 neural network",
+      color: "text-green-600",
+      bgColor: "bg-green-50"
     }
   ]
 
   const stats = [
-    { number: "1M+", label: "Images Analyzed", icon: Camera },
-    { number: "99.9%", label: "Uptime", icon: TrendingUp },
-    { number: "50K+", label: "Happy Users", icon: Users },
-    { number: "80+", label: "Object Types", icon: Award }
-  ]
-
-  const capabilities = [
-    "Person and face detection",
-    "Vehicle identification (cars, trucks, motorcycles)",
-    "Animal recognition (dogs, cats, birds, etc.)",
-    "Sports equipment detection",
-    "Household objects identification",
-    "Traffic signs and lights",
-    "Food and beverage recognition",
-    "Electronic devices detection"
+    { number: "80+", label: "Object Types", icon: Award, color: "text-orange-600" },
+    { number: "95%+", label: "Detection Accuracy", icon: Target, color: "text-green-600" },
+    { number: "<2s", label: "Processing Time", icon: Zap, color: "text-blue-600" },
+    { number: "YOLO v8", label: "AI Model", icon: Brain, color: "text-purple-600" }
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgb(148,163,184,0.3)_1px,transparent_0)] bg-[size:20px_20px]"></div>
-        <motion.div
-          animate={{ 
-            rotate: 360,
-            scale: [1, 1.2, 1]
-          }}
-          transition={{ 
-            duration: 20, 
-            repeat: Infinity, 
-            ease: "linear" 
-          }}
-          className="absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ 
-            rotate: -360,
-            scale: [1.2, 1, 1.2]
-          }}
-          transition={{ 
-            duration: 25, 
-            repeat: Infinity, 
-            ease: "linear" 
-          }}
-          className="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"
-        />
-      </div>
-
+    <div className="bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Hero Section */}
-      <div className="relative z-10">
-        <div className="container mx-auto px-4 pt-20 pb-16">
-          <div className="text-center max-w-5xl mx-auto">
-            {/* Logo and Icon */}
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-              className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-3xl flex items-center justify-center shadow-2xl"
-            >
-              <motion.div
-                animate={{ rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Camera className="w-16 h-16 text-white" />
-              </motion.div>
-            </motion.div>
+      <section ref={ref} className="relative flex items-center justify-center px-4 py-6 sm:px-6 sm:py-8 lg:py-12">
+        {/* Background Elements */}
+        <motion.div
+          style={{ y, opacity }}
+          className="absolute top-8 right-8 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]), opacity }}
+          className="absolute bottom-8 left-8 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-3xl"
+        />
 
-            {/* Main Heading */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-6xl md:text-8xl font-black bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6 leading-tight"
-            >
-              Next-Generation
-              <br />
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Object Detection
+        <div className="container mx-auto grid lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-6xl">
+          {/* Left Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-4 sm:space-y-6"
+          >
+            <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full text-sm font-medium">
+              <Sparkles className="w-3 h-3" />
+              <span>Powered by YOLO v8 AI</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+              AI Object Detection
+              <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Made Simple
               </span>
-            </motion.h1>
+            </h1>
 
-            {/* Subtitle */}
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-2xl md:text-3xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-12"
-            >
-              Harness the power of advanced AI to identify, analyze, and understand objects in your images with 
-              <span className="font-bold text-blue-600"> unprecedented accuracy</span> and 
-              <span className="font-bold text-purple-600"> lightning speed</span>.
-            </motion.p>
+            <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-lg">
+              Upload any image and watch our advanced AI instantly identify and locate objects with 
+              professional-grade accuracy. No setup required.
+            </p>
 
-            {/* CTA Buttons */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16"
-            >
+            <div className="flex flex-col sm:flex-row gap-3">
               <Link to="/detect">
                 <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold py-6 px-12 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-4 text-xl"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
                 >
-                  <Camera className="w-8 h-8" />
-                  <span>Start Detecting</span>
-                  <ArrowRight className="w-6 h-6" />
+                  <Upload className="w-4 h-4" />
+                  <span>Try Detection Now</span>
+                  <ArrowRight className="w-3 h-3" />
                 </motion.button>
               </Link>
 
               <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white/80 backdrop-blur-sm hover:bg-white border-2 border-gray-200 hover:border-gray-300 text-gray-800 font-bold py-6 px-12 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-4 text-xl"
+                className="border-2 border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-xl hover:bg-gray-50 transition-all duration-300 flex items-center space-x-2"
               >
-                <Play className="w-6 h-6" />
+                <Play className="w-4 h-4" />
                 <span>Watch Demo</span>
               </motion.button>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {/* Feature Pills */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-wrap items-center justify-center gap-6"
+          {/* Right Visual */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative"
+          >
+            <div className="relative bg-white rounded-xl shadow-2xl p-4 sm:p-6 border border-gray-100">
+              {/* Mock Detection Interface */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold text-gray-900">Detection Results</h3>
+                  <div className="flex items-center space-x-2 text-green-600">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-xs">Processing</span>
+                  </div>
+                </div>
+                
+                <div className="bg-gray-100 rounded-lg h-40 sm:h-48 overflow-hidden relative">
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    <img 
+                      src="/homepagephoto.jpg" 
+                      alt="Object Detection Preview" 
+                      className="max-w-full max-h-full object-contain rounded-xl"
+                    />
+                    
+                    {/* Bounding boxes positioned to exactly match the objects in the image */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="relative" style={{ width: '85%', height: '75%' }}>
+                        {/* Car bounding box - positioned to cover the red car exactly */}
+                        <div 
+                          className="absolute border-2 border-green-500 bg-green-500/10 rounded"
+                          style={{
+                            left: '18%',     // Shift left more to accommodate larger size
+                            top: '28%',      // Move up more for larger vertical size
+                            width: '54%',    // Increased from 45% (about 20% more)
+                            height: '66%'    // Increased from 55% (about 20% more)
+                          }}
+                        >
+                          <div className="bg-green-500 text-white text-xs px-1 py-0.5 rounded absolute -top-5 left-0 whitespace-nowrap">
+                            Car 87.8%
+                          </div>
+                        </div>
+                        
+                        {/* Person bounding box - positioned to cover the person exactly */}
+                        <div 
+                          className="absolute border-2 border-blue-500 bg-blue-500/10 rounded"
+                          style={{
+                            left: '66%',     // Slightly adjust for better positioning
+                            top: '8%',       // Start even higher for more vertical stretch
+                            width: '22%',    // Increased from 18% (about 20% more)
+                            height: '90%'    // Increased from 75% (about 20% more)
+                          }}
+                        >
+                          <div className="bg-blue-500 text-white text-xs px-1 py-0.5 rounded absolute -top-5 left-0 whitespace-nowrap">
+                            Person 94.2%
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between bg-blue-50 p-2 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <Users className="w-3 h-3 text-blue-600" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-900">Person</span>
+                    </div>
+                    <span className="text-blue-600 font-semibold text-sm">94.2%</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between bg-green-50 p-2 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center">
+                        <Target className="w-3 h-3 text-green-600" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-900">Car</span>
+                    </div>
+                    <span className="text-green-600 font-semibold text-sm">87.8%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Elements */}
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-2 -right-2 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
             >
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
-                  whileHover={{ scale: 1.1, y: -5 }}
-                  className={`flex items-center space-x-3 ${feature.bgColor} backdrop-blur-sm px-6 py-3 rounded-full border border-gray-200/50 shadow-lg cursor-pointer`}
-                >
-                  <feature.icon className={`w-6 h-6 ${feature.color}`} />
-                  <span className="font-semibold text-gray-800">{feature.title}</span>
-                </motion.div>
-              ))}
+              <Eye className="w-4 h-4" />
             </motion.div>
-          </div>
+            
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+              className="absolute -bottom-2 -left-2 bg-purple-600 text-white p-2 rounded-lg shadow-lg"
+            >
+              <Brain className="w-4 h-4" />
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
+      </section>
 
       {/* Stats Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="relative z-10 py-16 bg-white/60 backdrop-blur-lg"
-      >
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <stat.icon className="w-8 h-8 mx-auto mb-3 text-blue-600" />
-                <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Features Section */}
-      <div className="relative z-10 py-20">
-        <div className="container mx-auto px-4">
+      <section className="py-8 sm:py-12 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8"
           >
-            <h2 className="text-5xl font-bold text-gray-900 mb-6">
-              Powered by <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Advanced AI</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+              Powerful <span className="text-blue-600">AI Capabilities</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our cutting-edge deep learning models deliver unmatched performance across a wide range of object detection tasks.
-            </p>
+            <p className="text-gray-600">Technical specifications and features</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {features.map((feature, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+            {stats.map((stat, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-                className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300"
+                className="text-center bg-white rounded-lg p-4 sm:p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
               >
-                <div className={`w-16 h-16 ${feature.bgColor} rounded-2xl flex items-center justify-center mb-6`}>
-                  <feature.icon className={`w-8 h-8 ${feature.color}`} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                <stat.icon className={`w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 sm:mb-3 ${stat.color}`} />
+                <div className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">{stat.number}</div>
+                <div className="text-gray-600 text-xs sm:text-sm">{stat.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Capabilities Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="relative z-10 py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
-      >
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center text-white">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">What Can We Detect?</h2>
-            <p className="text-xl text-blue-100 mb-12">
-              Our AI recognizes 80+ different object classes with exceptional accuracy
+      {/* Features Section */}
+      <section className="py-8 sm:py-12 bg-gradient-to-b from-slate-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-8 sm:mb-12"
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">How It Works</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Our AI-powered detection system makes object identification effortless and accurate
             </p>
-            
-            <div className="grid md:grid-cols-2 gap-4 text-left">
-              {capabilities.map((capability, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-lg p-4"
-                >
-                  <CheckCircle className="w-6 h-6 text-green-300 flex-shrink-0" />
-                  <span className="text-white font-medium">{capability}</span>
-                </motion.div>
-              ))}
-            </div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5 }}
+                className="text-center bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+              >
+                <div className={`w-12 h-12 sm:w-16 sm:h-16 ${feature.bgColor} rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6`}>
+                  <feature.icon className={`w-6 h-6 sm:w-8 sm:h-8 ${feature.color}`} />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{feature.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </motion.div>
+      </section>
 
       {/* CTA Section */}
-      <div className="relative z-10 py-20">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-8 sm:py-12 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Ready to Experience the Future?
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">
+              Ready to Experience AI Detection?
             </h2>
-            <p className="text-xl text-gray-600 mb-10">
-              Upload your first image and see our AI in action. No registration required.
+            <p className="text-lg sm:text-xl text-blue-100 mb-6 sm:mb-8">
+              Upload your first image and see the magic happen in real-time
             </p>
             
             <Link to="/detect">
               <motion.button
-                whileHover={{ scale: 1.05, y: -3 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold py-6 px-16 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-4 mx-auto text-xl"
+                className="bg-white text-blue-600 font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-3"
               >
-                <Sparkles className="w-8 h-8" />
-                <span>Try It Now - It's Free!</span>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                >
-                  <Target className="w-6 h-6" />
-                </motion.div>
+                <Scan className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-sm sm:text-base">Start Detecting Now</span>
+                <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
               </motion.button>
             </Link>
           </motion.div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }

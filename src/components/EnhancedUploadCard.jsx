@@ -63,13 +63,6 @@ export default function EnhancedUploadCard({ onImageSelect, isProcessing }) {
     }
   }
 
-  const features = [
-    { icon: Brain, text: "AI-Powered Detection", color: "text-purple-600" },
-    { icon: Target, text: "95%+ Accuracy", color: "text-green-600" },
-    { icon: Zap, text: "Real-time Processing", color: "text-yellow-600" },
-    { icon: Sparkles, text: "Advanced Analytics", color: "text-blue-600" }
-  ]
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -92,30 +85,9 @@ export default function EnhancedUploadCard({ onImageSelect, isProcessing }) {
           >
             <Camera className="w-8 h-8" />
           </motion.div>
-          <h2 className="text-2xl font-bold mb-2">Object Detection Studio</h2>
-          <p className="text-blue-100">Upload an image to discover what's inside</p>
+          <h2 className="text-2xl font-bold mb-2">Objectify</h2>
+          <p className="text-blue-100">Upload an image to detect objects instantly</p>
         </motion.div>
-      </div>
-
-      {/* Features Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-gray-50">
-        {features.map((feature, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            className="text-center"
-          >
-            <motion.div
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              className={`w-8 h-8 mx-auto mb-2 ${feature.color}`}
-            >
-              <feature.icon className="w-full h-full" />
-            </motion.div>
-            <p className="text-xs font-medium text-gray-700">{feature.text}</p>
-          </motion.div>
-        ))}
       </div>
 
       {/* Upload Area */}
